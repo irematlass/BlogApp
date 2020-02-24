@@ -51,7 +51,7 @@ namespace BlogApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,KategoriAdi")] Category category)
+        public ActionResult Create([Bind(Include = "KategoriAdi")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -89,6 +89,8 @@ namespace BlogApp.Controllers
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
+
+                TempData["Kategori"] = category;
                 return RedirectToAction("Index");
             }
             return View(category);
