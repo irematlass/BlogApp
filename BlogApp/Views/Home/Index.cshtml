@@ -22,11 +22,12 @@
             <p>
                 @item.Aciklama
             </p>
-            <button class="btn btn-primary">Daha fazla...</button>
+            @Html.ActionLink("Daha fazla...", "Details", "Blog", new { id = item.Id }, new { @class = "btn btn-primary" })
+
         }
     </div>
     <div class="col-md-4">
-
+        @{Html.RenderAction("KategoriListesi", "Category");}
     </div>
 </div>
 

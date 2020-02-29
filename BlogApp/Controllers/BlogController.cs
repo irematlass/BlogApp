@@ -14,6 +14,29 @@ namespace BlogApp.Controllers
     {
         private BlogContext db = new BlogContext();
 
+        public ActionResult List(int? id)
+        {
+            var bloglar = db.Bloglar
+                .Where(i => i.Onay == true )
+               .Select(i => new BlogModel()
+               {
+                   Id = i.Id,
+                   Baslik = i.Baslik.Length > 100 ? i.Baslik.Substring(0, 100) + "..." : i.Baslik,
+                   Aciklama = i.Aciklama,
+                   EklenmeTarihi = i.EklenmeTarihi,
+                   Anasayfa = i.Anasayfa,
+                   Onay = i.Onay,
+                   Resim = i.Resim,
+                   CategoryId=i.CategoryId
+               }).AsQueryable();
+            if(id != null)
+            {
+                bloglar = bloglar.Where(i => i.CategoryId == id);
+            }
+               
+            return View(bloglar.ToList());
+        }
+        
         // GET: Blog
         public ActionResult Index()
         {
